@@ -1,0 +1,27 @@
+name: Auto_Fuck_Nco_ZJGSU
+
+on:
+   workflow_dispatch:
+   gollum:
+   schedule:
+       - cron: '30 0,3,16,22 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Set up Python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: 'Install requirements'
+        run: pip3 install -r requirements.txt
+      - name: 'Keep alive'
+        env:
+          alive: ${{ secrets.alive }}
+        run: python3 keep_alive.py
+      - name: 'Working'
+        env:
+          users: ${{ secrets.users }}
+        run: python3 main.py
