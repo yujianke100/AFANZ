@@ -25,16 +25,22 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
             ref: master
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: ls
+      - name: 'Set up Python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: 'Install requirements'
+        run: pip3 install -r requirements.txt
+      - name: 'Keep alive'
+        env:
+          alive: ${{ secrets.alive }}
+        run: python3 keep_alive.py
+      - name: 'Working'
+        env:
+          users: ${{ secrets.users }}
+        run: python3 main.py
