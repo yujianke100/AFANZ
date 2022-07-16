@@ -65,12 +65,16 @@ def check(username: str, password: str, location: str, coordinate: str) -> str:
         s = requests.session()
         res = s.post('https://uia.zjgsu.edu.cn/cas/mobile/getAccessToken', data=user, headers=header)
         access_token = res.json()['access_token']
-        s.get('https://uia.zjgsu.edu.cn/cas/login?service=https://myapp.zjgsu.edu.cn/home/index&access_token='
-              + access_token + '&mobileBT=' + user['mobileBT'])
+        res = s.get('https://uia.zjgsu.edu.cn/cas/login?service=http%3A%2F%2Fuia.zjgsu.edu.cn%2Fcas%2Foauth2.0%2FcallbackAuthorize&access_token=' + access_token + '&mobileBT=' + user['mobileBT'])
 
-        res = s.get('https://ticket.zjgsu.edu.cn/stucheckservice/auth/login/stuCheck', headers=header)
-        referer = res.history[-1].headers['location']
+        referer = res.history[0].headers['location']
+        res = s.get(referer)
+        referer = res.history[0].headers['location']
+        code = re.search(R'\?ticket=(.+)', referer).group(1)
+        res = s.get('https://yzy.zjgsu.edu.cn/cloudbattleservice/auth/callback?code=' + code)
+        referer = res.history[0].headers['location']
         token = re.search(R'\?token=(.+?)&', referer).group(1)
+
         headers = CaseInsensitiveDict()
         headers["Accept"] = "application/json"
         headers["Authorization"] = "Bearer " + token
