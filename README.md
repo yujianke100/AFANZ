@@ -54,13 +54,13 @@ fork自https://github.com/Hukeqing/FANZ
      
      由于workflow会需要60天手动续一次，这里加一个每次签到前先续杯的模块。
 
-     ~~记得更改[keep_alive.py](keep_alive.py)，以实现每次签到自动续杯
-     ````
-     url = 'https://api.github.com/repos/你的用户名/AFANZ/actions/workflows/main.yml/enable'
-     ````
-     ~~
+     ~~记得更改[keep_alive.py](keep_alive.py)，以实现每次签到自动续杯~~
      
-     自动续杯部分，换成了使用curl。请在`.github/workflows/main.yml`中修改`curl -X PUT -H "Authorization: token $REST_TOKEN"`后的url。
+     自动续杯部分，换成了使用curl。请在`.github/workflows/main.yml`中修改`curl -X PUT -H "Authorization: token $REST_TOKEN"`后的url：
+     
+     ````
+     "https://api.github.com/repos/你的用户名/AFANZ/actions/workflows/main.yml/enable"
+     ````
      
      单独的续杯可以看[Workflow-Keep-Alive](https://github.com/zhzhzhy/Workflow-Keep-Alive)
      
