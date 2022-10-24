@@ -28,6 +28,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
             ref: master
+      - name: 'Keep alive'
+        env:
+          REST_TOKEN: ${{ secrets.alive }}
+        run: |
+          echo "Enable Workflow Start..."
+          curl -X PUT -H "Authorization: token $REST_TOKEN" "https://api.github.com/repos/yujianke100/AFANZ/actions/workflows/main.yml/enable"
+          echo "Finished"
 
       - name: 'Set up Python'
         uses: actions/setup-python@v1
@@ -36,10 +43,6 @@ jobs:
 
       - name: 'Install requirements'
         run: pip3 install -r requirements.txt
-      - name: 'Keep alive'
-        env:
-          alive: ${{ secrets.alive }}
-        run: python3 keep_alive.py
       - name: 'Working'
         env:
           users: ${{ secrets.users }}
