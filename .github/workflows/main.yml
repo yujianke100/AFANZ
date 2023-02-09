@@ -7,13 +7,13 @@ on:
   # Triggers the workflow on push or pull request events but only for the "rm" branch
 #   push:
 #     branches: [ "rm" ]
-  pull_request:
-    branches: [ "rm" ]
+#   pull_request:
+#     branches: [ "rm" ]
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-  schedule:
-    - cron: '30 0,3,16,22 * * *'
+#   workflow_dispatch:
+#   schedule:
+#     - cron: '30 0,3,16,22 * * *'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
